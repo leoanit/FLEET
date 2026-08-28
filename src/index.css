@@ -1,0 +1,411 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design Token Root ───────────────────────────────────────────────────── */
+/* :root = LIGHT theme (default). .dark overrides below hold the dark values. */
+@layer base {
+  :root {
+    /* Structural (shadcn-style HSL, lightly used but kept complete) */
+    --background: 228 30% 97%;
+    --foreground: 228 42% 8%;
+    --muted: 228 20% 94%;
+    --muted-foreground: 228 16% 46%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 228 42% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 228 42% 8%;
+    --border: 228 20% 88%;
+    --input: 228 20% 88%;
+    --ring: 102 57% 53%;
+    --radius: 0.625rem;
+
+    /* Accent — CRA green (#6DCC43), sourced from the live cra.go.ke stylesheet + logo.
+       --accent is for FILLED usage (button/badge-dot backgrounds) where the foreground
+       is --accent-contrast. --accent-text is for usage AS a foreground color on top of
+       a surface (links, active nav text, badge labels) — darkened here so it clears
+       WCAG AA (~5:1) against white; on dark surfaces the vivid --accent already has
+       plenty of contrast so --accent-text just equals it there (see .dark block). */
+    --accent: #6DCC43;
+    --accent-text: #3D7D25;
+    --accent-contrast: #062B0E;
+    --accent-soft-bg: color-mix(in srgb, var(--accent) 10%, transparent);
+    --accent-soft-border: color-mix(in srgb, var(--accent) 32%, transparent);
+    --focus-ring: color-mix(in srgb, var(--accent) 45%, transparent);
+
+    /* Legacy alias — remove once every var(--apex-orange) reference is migrated to
+       var(--accent) during the page-by-page redesign. */
+    --apex-orange: var(--accent);
+    --apex-orange-900: #0A2E12;
+
+    /* Status/semantic colors — distinct hues from --accent so "success" and "active
+       nav" never render identically. Darkened for light-mode text/AA contrast; the
+       .dark block restores the original softer pastel values tuned for near-black. */
+    --apex-blue: #2563EB;
+    --apex-green: #059669;
+    --apex-red: #DC2626;
+    --apex-yellow: #D97706;
+    --apex-gray: #64748B;
+    --apex-purple: #7C3AED;
+
+    /* Surfaces */
+    --surface-0: #F5F6FA;
+    --surface-1: #FFFFFF;
+    --surface-2: #F0F2F8;
+    --surface-3: #E7EAF4;
+
+    /* Borders */
+    --border-0: #E2E6F0;
+    --border-1: #CDD3E2;
+
+    /* Text */
+    --text-primary:   #0E1629;
+    --text-secondary: #5A6882;
+    --text-tertiary:  #8B95AC;
+
+    /* Ambient shadow used by card-lift/card-glow — much softer on a light ground */
+    --shadow-ambient: rgba(15, 23, 42, 0.10);
+    --scrollbar-thumb-hover: #B8C0D4;
+
+    /* Primary/secondary for shadcn */
+    --primary: 102 57% 53%;
+    --primary-foreground: 150 70% 9%;
+    --secondary: 228 20% 94%;
+    --secondary-foreground: 228 42% 8%;
+    --accent-hsl: 228 20% 92%;
+    --accent-hsl-foreground: 228 42% 8%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+  }
+
+  .dark {
+    --background: 230 42% 4%;
+    --foreground: 228 60% 96%;
+    --muted: 228 30% 9%;
+    --muted-foreground: 224 20% 44%;
+    --popover: 230 42% 4%;
+    --popover-foreground: 228 60% 96%;
+    --card: 228 38% 6%;
+    --card-foreground: 228 60% 96%;
+    --border: 228 28% 12%;
+    --input: 228 28% 12%;
+    --ring: 102 57% 53%;
+
+    --accent: #6DCC43;
+    --accent-text: #6DCC43;
+    --accent-contrast: #04150A;
+    --accent-soft-bg: color-mix(in srgb, var(--accent) 8%, transparent);
+    --accent-soft-border: color-mix(in srgb, var(--accent) 25%, transparent);
+    --focus-ring: color-mix(in srgb, var(--accent) 50%, transparent);
+
+    --apex-orange: var(--accent);
+    --apex-orange-900: #0A2E12;
+
+    --apex-blue:   #60A5FA;
+    --apex-green:  #34D399;
+    --apex-red:    #F87171;
+    --apex-yellow: #FBBF24;
+    --apex-gray:   #94A3B8;
+    --apex-purple: #A78BFA;
+
+    --surface-0: #04060F;
+    --surface-1: #080D1C;
+    --surface-2: #0C1225;
+    --surface-3: #101829;
+
+    --border-0: #111828;
+    --border-1: #182035;
+
+    --text-primary:   #ECF0FF;
+    --text-secondary: #4E5A7A;
+    --text-tertiary:  #2C3550;
+
+    --shadow-ambient: rgba(0, 0, 0, 0.4);
+    --scrollbar-thumb-hover: #2a3550;
+
+    --primary: 102 57% 53%;
+    --primary-foreground: 230 42% 4%;
+    --secondary: 228 28% 12%;
+    --secondary-foreground: 228 60% 96%;
+    --accent-hsl: 228 28% 14%;
+    --accent-hsl-foreground: 228 60% 96%;
+    --destructive: 0 72% 71%;
+    --destructive-foreground: 228 60% 96%;
+  }
+}
+
+@layer base {
+  * { @apply border-border; }
+
+  html, body {
+    background: var(--surface-0);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'DM Sans', 'system-ui', sans-serif;
+    font-feature-settings: "ss01", "ss02", "cv01";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', 'DM Sans', sans-serif;
+    letter-spacing: -0.025em;
+  }
+}
+
+/* ─── Typography Classes ──────────────────────────────────────────────────── */
+.font-display {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.03em;
+}
+.font-data {
+  font-family: 'IBM Plex Mono', monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+.text-micro {
+  font-size: 0.625rem;    /* 10px */
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.text-label {
+  font-size: 0.6875rem;   /* 11px */
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* ─── Keyframes ───────────────────────────────────────────────────────────── */
+@keyframes drift-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes arc-draw {
+  from { stroke-dasharray: 0 999; }
+}
+@keyframes ring-pulse {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  70%  { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+@keyframes scan-line {
+  0%   { top: -4px;    opacity: 0; }
+  8%   { opacity: 0.6; }
+  92%  { opacity: 0.6; }
+  100% { top: 100%;    opacity: 0; }
+}
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+@keyframes bar-grow {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@keyframes number-rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes breath {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1; }
+}
+
+/* ─── Animation Utilities ─────────────────────────────────────────────────── */
+.anim-in       { animation: drift-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-fade     { animation: fade-in 0.4s ease both; }
+.anim-number   { animation: number-rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.anim-breath   { animation: breath 3s ease-in-out infinite; }
+.anim-arc      { animation: arc-draw 1.4s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+.d-100  { animation-delay: 100ms; }
+.d-200  { animation-delay: 200ms; }
+.d-300  { animation-delay: 300ms; }
+.d-400  { animation-delay: 400ms; }
+.d-500  { animation-delay: 500ms; }
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; height: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-1); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover); }
+
+/* ─── Surfaces ────────────────────────────────────────────────────────────── */
+.surface-card {
+  background: var(--surface-1);
+  border: 1px solid var(--border-0);
+  border-radius: calc(var(--radius) + 2px);
+}
+.surface-raised {
+  background: var(--surface-2);
+  border: 1px solid var(--border-0);
+}
+.surface-inset {
+  background: var(--surface-0);
+  border: 1px solid var(--border-0);
+}
+.surface-glass {
+  background: color-mix(in srgb, var(--surface-1) 75%, transparent);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid color-mix(in srgb, var(--text-primary) 4%, transparent);
+}
+
+/* ─── Card Border Glow (single color, not gradient-spectrum) ─────────────── */
+.card-glow-orange {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 15%, transparent), 0 4px 24px var(--shadow-ambient);
+  border-color: color-mix(in srgb, var(--accent) 20%, transparent) !important;
+}
+.card-glow-blue {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--apex-blue) 15%, transparent), 0 4px 24px var(--shadow-ambient);
+  border-color: color-mix(in srgb, var(--apex-blue) 20%, transparent) !important;
+}
+.card-glow-green {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--apex-green) 15%, transparent), 0 4px 24px var(--shadow-ambient);
+  border-color: color-mix(in srgb, var(--apex-green) 20%, transparent) !important;
+}
+.card-glow-red {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--apex-red) 15%, transparent), 0 4px 24px var(--shadow-ambient);
+  border-color: color-mix(in srgb, var(--apex-red) 20%, transparent) !important;
+}
+
+/* ─── Shimmer Skeleton ────────────────────────────────────────────────────── */
+.skel {
+  background: linear-gradient(90deg, var(--border-0) 25%, var(--border-1) 50%, var(--border-0) 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+/* ─── Accent Utilities ────────────────────────────────────────────────────── */
+.text-accent  { color: var(--accent-text); }
+.bg-accent    { background: var(--accent); }
+.border-accent { border-color: var(--accent-soft-border); }
+
+.badge-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 3px 8px;
+  border-radius: 99px;
+  border: 1px solid var(--accent-soft-border);
+  background: var(--accent-soft-bg);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.badge-live::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 6px var(--accent);
+  animation: breath 2s ease-in-out infinite;
+}
+
+/* ─── Nav link (toolbar + mobile nav panel) ──────────────────────────────────
+   Layout (flex direction/gap/padding/font-size) is deliberately left to Tailwind
+   classes at each call site — the toolbar's icon-over-label buttons and the
+   mobile panel's icon-beside-label rows need different layouts, and defining
+   those here would fight Tailwind's utility classes on cascade order. This
+   class only owns the shared color/active-state styling. */
+.nav-link {
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  color: var(--text-secondary);
+  transition: all 0.18s ease;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.nav-link:hover {
+  color: var(--text-primary);
+  background: var(--surface-2);
+  border-color: var(--border-0);
+}
+.nav-link-active {
+  color: var(--accent-text);
+  background: var(--accent-soft-bg);
+  border-color: var(--accent-soft-border);
+}
+.nav-link-active svg { color: var(--accent-text); }
+
+/* ─── Hover lift ──────────────────────────────────────────────────────────── */
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px -8px var(--shadow-ambient);
+}
+
+/* ─── Scan line effect (left panel) — a "dark hacker-SaaS" motif, dark-mode only ── */
+.scan-fx::after { content: none; }
+.dark .scan-fx::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  height: 120px;
+  background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--accent) 6%, transparent) 40%, color-mix(in srgb, var(--accent) 10%, transparent) 50%, color-mix(in srgb, var(--accent) 6%, transparent) 60%, transparent);
+  animation: scan-line 8s linear infinite;
+  animation-delay: 1.5s;
+  pointer-events: none;
+}
+
+/* ─── Dot grid — derived from --text-primary so it's always faint-but-visible ──── */
+.dot-grid {
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--text-primary) 6%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* ─── Dense table primitives (Phase 1) ───────────────────────────────────────
+   Shared by the hand-rolled <table> markup in DispatchTable/DriverListTable/
+   RequestsTable — a lightweight class set rather than a generic <Table>
+   component, since each table's columns/cell content differ too much for a
+   heavy abstraction to help. Replaces per-file py-3.5/py-3 padding and JS
+   onMouseEnter/onMouseLeave row-hover handlers with real CSS. */
+.table-dense th {
+  padding: 8px 12px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-tertiary);
+  border-bottom: 1px solid var(--border-0);
+  text-align: left;
+}
+.table-dense td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-0);
+}
+.table-row-hover {
+  transition: background-color 0.12s ease;
+}
+.table-row-hover:hover {
+  background: var(--surface-2);
+}
+.table-filter-input, .field-input {
+  width: 100%;
+  background: var(--surface-2);
+  border: 1px solid var(--border-0);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.table-filter-input { padding: 6px 10px; font-size: 12px; }
+.table-filter-input:focus, .field-input:focus {
+  border-color: var(--focus-ring);
+}
