@@ -68,7 +68,7 @@ export const RequestAccessPage: React.FC = () => {
       await requestAccess(name, email, department, employeeId);
       setSubmitted(true);
     } catch (err: any) {
-      setError(err?.response?.data?.message ?? 'Failed to submit your request. Please try again.');
+      setError(err?.response?.data?.message || err?.message || 'Failed to submit your request. Please try again.');
     } finally {
       setIsLoading(false);
     }

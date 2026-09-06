@@ -76,7 +76,7 @@ export const LoginPage: React.FC = () => {
       setCredentials(user, token);
       navigate('/dashboard');
     } catch (err: any) {
-      setError(err?.response?.data?.message ?? 'Invalid email or password');
+      setError(err?.response?.data?.message || err?.message || 'Invalid email or password');
     } finally {
       setIsLoading(false);
     }

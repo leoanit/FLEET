@@ -1,6 +1,31 @@
-# FleetOS — Fleet Management System
+# FleetOS — Enterprise Fleet Management System
 
-A full-stack fleet management and dispatch platform for managing vehicles, drivers, dispatch operations, GPS telemetry, maintenance records, and fleet analytics.
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?style=for-the-badge&logo=vercel)](https://fleet-git-main-leoanits-projects.vercel.app/)
+[![React](https://img.shields.io/badge/React%2018-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![MongoDB Atlas](https://img.shields.io/badge/MongoDB%20Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+
+A full-stack, enterprise fleet intelligence and dispatch operations platform designed for real-time telemetry, vehicle asset management, driver compliance, route dispatching, predictive maintenance, and analytics.
+
+---
+
+### 🌐 Live Production Demo
+
+**URL:** [https://fleet-git-main-leoanits-projects.vercel.app/](https://fleet-git-main-leoanits-projects.vercel.app/)
+
+#### 🔑 Demo Accounts for Instant Review
+
+Click-to-fill demo pills are available directly on the login screen, or you can use the credentials below:
+
+| Role | Email | Password | Permissions & Features |
+| :--- | :--- | :--- | :--- |
+| **System Admin** | `admin@fleetos.com` | `admin123` | Full access: CRUD vehicles & drivers, system metrics, audit logs |
+| **Fleet Dispatcher** | `dispatcher@fleetos.com` | `dispatcher123` | Dispatch operations, trip assignment, driver management |
+| **Certified Operator** | `david.mwangi@fleetos.co.ke` | `driver123` | Driver portal: assigned routes, trip logs, vehicle health check |
+
+---
 
 ## Features
 

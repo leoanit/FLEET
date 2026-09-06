@@ -45,6 +45,7 @@ apiClient.interceptors.response.use(
       message: error.response?.data?.message || error.message || 'An unexpected network error occurred',
       status: error.response?.status || 500,
       code: error.response?.data?.code || 'UNKNOWN_ERROR',
+      response: error.response,
       raw: error
     };
 
